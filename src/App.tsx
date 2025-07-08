@@ -12,6 +12,8 @@ import { HomePage } from "./pages/HomePage";
 import { AboutPage } from "./pages/AboutPage";
 import { LoginPage } from "./pages/LoginPage";
 import { SignupPage } from "./pages/SignupPage";
+import { ClassesPage } from "./pages/ClassesPage";
+import { TrainersPage } from "./pages/TrainersPage";
 import { AdminLogin } from "./pages/admin/AdminLogin";
 import { AdminDashboard } from "./pages/admin/AdminDashboard";
 import { UserManagement } from "./pages/admin/UserManagement";
@@ -120,17 +122,19 @@ const App = () => (
             </ProtectedRoute>
           } />
           
-          {/* Coming soon pages */}
-          <Route path="/trainers" element={
+          {/* Main feature pages */}
+          <Route path="/classes" element={
             <MainLayout>
-              <div className="min-h-screen flex items-center justify-center">
-                <div className="text-center">
-                  <h1 className="text-4xl font-bold mb-4">Trainers Page</h1>
-                  <p className="text-muted-foreground">Coming soon...</p>
-                </div>
-              </div>
+              <ClassesPage />
             </MainLayout>
           } />
+          <Route path="/trainers" element={
+            <MainLayout>
+              <TrainersPage />
+            </MainLayout>
+          } />
+          
+          {/* Coming soon pages */}
           <Route path="/premium" element={
             <MainLayout>
               <div className="min-h-screen flex items-center justify-center">
