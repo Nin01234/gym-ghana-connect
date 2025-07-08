@@ -1,0 +1,12 @@
+-- Add sample training sections with advanced workout content
+INSERT INTO public.training_sections (title, description, category, difficulty_level, duration, video_url, thumbnail_url) VALUES
+('HIIT Cardio Blast', 'High-intensity interval training to burn calories and improve cardiovascular health', 'Cardio', 'Intermediate', 30, 'https://www.youtube.com/watch?v=UBMk30rjy0o', 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400'),
+('Full Body Strength', 'Complete strength training workout targeting all major muscle groups', 'Strength', 'Advanced', 45, 'https://www.youtube.com/watch?v=LqM9dxJDddI', 'https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=400'),
+('Yoga Flow for Flexibility', 'Gentle yoga flow to improve flexibility and reduce stress', 'Yoga', 'Beginner', 25, 'https://www.youtube.com/watch?v=VaoV1PrYft4', 'https://images.unsplash.com/photo-1588286840104-8957b019727f?w=400'),
+('Core Power Builder', 'Intense core workout to build abdominal strength and stability', 'Core', 'Intermediate', 20, 'https://www.youtube.com/watch?v=1919eTCoG6s', 'https://images.unsplash.com/photo-1594737625785-a6cbdabd333c?w=400'),
+('Boxing Fitness Challenge', 'High-energy boxing workout for cardio and strength', 'Boxing', 'Intermediate', 35, 'https://www.youtube.com/watch?v=kWaLwGjJg6Q', 'https://images.unsplash.com/photo-1549060279-7e168fcee0c2?w=400'),
+('Pilates Total Body', 'Full body pilates routine for strength and flexibility', 'Pilates', 'Beginner', 40, 'https://www.youtube.com/watch?v=8lOnGHSgCFo', 'https://images.unsplash.com/photo-1518611012118-696072aa579a?w=400'),
+('Functional Training', 'Functional movements for everyday strength and mobility', 'Functional', 'Advanced', 50, 'https://www.youtube.com/watch?v=2JHUV9TqFGs', 'https://images.unsplash.com/photo-1601422407692-ec4eeec1d9b3?w=400'),
+('Dance Cardio Fun', 'Fun dance-based cardio workout to music', 'Dance', 'Beginner', 30, 'https://www.youtube.com/watch?v=KC2kZPn-mIQ', 'https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?w=400'),
+('Power Lifting Basics', 'Learn proper form for squat, bench, and deadlift', 'Powerlifting', 'Intermediate', 60, 'https://www.youtube.com/watch?v=4AObAU-EcYE', 'https://images.unsplash.com/photo-1534368420009-621bfab424a8?w=400'),
+('Meditation & Mindfulness', 'Guided meditation for mental wellness and stress relief', 'Wellness', 'Beginner', 15, 'https://www.youtube.com/watch?v=O-6f5wQXSu8', 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400');
