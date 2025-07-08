@@ -2,11 +2,13 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu, Dumbbell, User, Calendar, MapPin, Users, Award, Phone, Home } from "lucide-react";
+import { Menu, Dumbbell, User, Calendar, MapPin, Users, Award, Phone, Home, LogOut } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
 
 export const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
+  const { user, signOut } = useAuth();
 
   const navItems = [
     { label: "Home", href: "/", icon: Home },
@@ -47,20 +49,38 @@ export const Header = () => {
 
           {/* Auth Buttons */}
           <div className="hidden md:flex items-center space-x-3">
-            <Button 
-              variant="ghost" 
-              onClick={() => navigate('/login')}
-              className="hover:bg-primary/10"
-            >
-              Login
-            </Button>
-            <Button 
-              variant="hero" 
-              onClick={() => navigate('/signup')}
-              className="min-w-[100px]"
-            >
-              Join Now
-            </Button>
+            {user ? (
+              <>
+                <span className="text-sm text-muted-foreground">
+                  Welcome, {user.user_metadata?.first_name || user.email}
+                </span>
+                <Button 
+                  variant="ghost" 
+                  onClick={signOut}
+                  className="hover:bg-primary/10"
+                >
+                  <LogOut className="h-4 w-4 mr-2" />
+                  Logout
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button 
+                  variant="ghost" 
+                  onClick={() => navigate('/login')}
+                  className="hover:bg-primary/10"
+                >
+                  Login
+                </Button>
+                <Button 
+                  variant="hero" 
+                  onClick={() => navigate('/signup')}
+                  className="min-w-[100px]"
+                >
+                  Join Now
+                </Button>
+              </>
+            )}
           </div>
 
           {/* Mobile Menu */}
@@ -98,27 +118,48 @@ export const Header = () => {
                 })}
 
                 <div className="pt-4 border-t space-y-3">
-                  <Button 
-                    variant="outline" 
-                    className="w-full justify-start"
-                    onClick={() => {
-                      navigate('/login');
-                      setIsOpen(false);
-                    }}
-                  >
-                    <User className="h-4 w-4 mr-2" />
-                    Login
-                  </Button>
-                  <Button 
-                    variant="hero" 
-                    className="w-full"
-                    onClick={() => {
-                      navigate('/signup');
-                      setIsOpen(false);
-                    }}
-                  >
-                    Join Now
-                  </Button>
+                  {user ? (
+                    <>
+                      <div className="text-sm text-muted-foreground p-3">
+                        Welcome, {user.user_metadata?.first_name || user.email}
+                      </div>
+                      <Button 
+                        variant="outline" 
+                        className="w-full justify-start"
+                        onClick={() => {
+                          signOut();
+                          setIsOpen(false);
+                        }}
+                      >
+                        <LogOut className="h-4 w-4 mr-2" />
+                        Logout
+                      </Button>
+                    </>
+                  ) : (
+                    <>
+                      <Button 
+                        variant="outline" 
+                        className="w-full justify-start"
+                        onClick={() => {
+                          navigate('/login');
+                          setIsOpen(false);
+                        }}
+                      >
+                        <User className="h-4 w-4 mr-2" />
+                        Login
+                      </Button>
+                      <Button 
+                        variant="hero" 
+                        className="w-full"
+                        onClick={() => {
+                          navigate('/signup');
+                          setIsOpen(false);
+                        }}
+                      >
+                        Join Now
+                      </Button>
+                    </>
+                  )}
                 </div>
               </div>
             </SheetContent>

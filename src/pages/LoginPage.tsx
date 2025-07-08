@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -9,6 +9,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Eye, EyeOff, Mail, Lock, Dumbbell, ArrowLeft } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 import heroGym from "@/assets/hero-gym.jpg";
 
 export const LoginPage = () => {
@@ -22,38 +23,75 @@ export const LoginPage = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
 
+  // Check if user is already logged in
+  useEffect(() => {
+    const checkAuth = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session) {
+        navigate("/");
+      }
+    };
+    checkAuth();
+  }, [navigate]);
+
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
     setIsLoading(true);
 
-    // Simulate login process
     try {
       if (!email || !password) {
         setError("Please fill in all fields");
         return;
       }
 
-      // Demo login logic
-      if (email === "demo@gymghana.com" && password === "demo123") {
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+
+      if (error) {
+        setError(error.message);
+        return;
+      }
+
+      if (data.user) {
         toast({
           title: "Welcome back!",
           description: "You have successfully logged in.",
         });
-        navigate("/dashboard");
-      } else {
-        setError("Invalid email or password");
+        navigate("/");
       }
+    } catch (error) {
+      setError("An unexpected error occurred. Please try again.");
     } finally {
       setIsLoading(false);
     }
   };
 
-  const handleSocialLogin = (provider: string) => {
-    toast({
-      title: "Coming Soon",
-      description: `${provider} login will be available soon.`,
-    });
+  const handleSocialLogin = async (provider: 'google' | 'facebook') => {
+    try {
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider,
+        options: {
+          redirectTo: `${window.location.origin}/`
+        }
+      });
+      
+      if (error) {
+        toast({
+          title: "Error",
+          description: error.message,
+          variant: "destructive"
+        });
+      }
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to sign in with " + provider,
+        variant: "destructive"
+      });
+    }
   };
 
   return (
@@ -179,7 +217,7 @@ export const LoginPage = () => {
               <div className="grid grid-cols-2 gap-4">
                 <Button 
                   variant="outline" 
-                  onClick={() => handleSocialLogin("Google")}
+                  onClick={() => handleSocialLogin("google")}
                   className="w-full"
                 >
                   <svg className="mr-2 h-4 w-4" viewBox="0 0 24 24">
@@ -204,7 +242,7 @@ export const LoginPage = () => {
                 </Button>
                 <Button 
                   variant="outline" 
-                  onClick={() => handleSocialLogin("Facebook")}
+                  onClick={() => handleSocialLogin("facebook")}
                   className="w-full"
                 >
                   <svg className="mr-2 h-4 w-4" fill="currentColor" viewBox="0 0 24 24">

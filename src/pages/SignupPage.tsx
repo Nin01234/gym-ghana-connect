@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -25,6 +25,7 @@ import {
   Target
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 import groupFitness from "@/assets/group-fitness.jpg";
 
 interface FormData {
@@ -68,6 +69,17 @@ export const SignupPage = () => {
 
   const navigate = useNavigate();
   const { toast } = useToast();
+
+  // Check if user is already logged in
+  useEffect(() => {
+    const checkAuth = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session) {
+        navigate("/");
+      }
+    };
+    checkAuth();
+  }, [navigate]);
 
   const totalSteps = 3;
   const progress = (currentStep / totalSteps) * 100;
@@ -183,14 +195,34 @@ export const SignupPage = () => {
     
     setIsLoading(true);
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
-      toast({
-        title: "Welcome to GymGhana!",
-        description: "Your account has been created successfully.",
+      const { data, error } = await supabase.auth.signUp({
+        email: formData.email,
+        password: formData.password,
+        options: {
+          emailRedirectTo: `${window.location.origin}/`,
+          data: {
+            first_name: formData.firstName,
+            last_name: formData.lastName,
+            phone: formData.phone,
+            fitness_goals: formData.goals,
+            experience_level: formData.fitnessLevel,
+            preferred_workout_time: formData.preferredWorkout,
+          }
+        }
       });
-      navigate("/dashboard");
+
+      if (error) {
+        setError(error.message);
+        return;
+      }
+
+      if (data.user) {
+        toast({
+          title: "Welcome to GymGhana!",
+          description: "Please check your email to verify your account.",
+        });
+        navigate("/login");
+      }
     } catch (error) {
       setError("Failed to create account. Please try again.");
     } finally {
