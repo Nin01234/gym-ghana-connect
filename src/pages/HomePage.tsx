@@ -13,10 +13,15 @@ import {
   Heart,
   Zap
 } from "lucide-react";
+import { Hero3D } from "@/components/Hero3D";
 import heroGym from "@/assets/hero-gym.jpg";
 import gymInterior from "@/assets/gym-interior.jpg";
 import groupFitness from "@/assets/group-fitness.jpg";
 import trainer1 from "@/assets/trainer-1.jpg";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay, Pagination } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/pagination';
 
 export const HomePage = () => {
   const navigate = useNavigate();
@@ -57,7 +62,7 @@ export const HomePage = () => {
 
   return (
     <div className="min-h-screen">
-      {/* Hero Section */}
+      {/* Hero Section with 3D */}
       <section className="relative h-screen flex items-center justify-center overflow-hidden">
         <div 
           className="absolute inset-0 bg-cover bg-center z-0"
@@ -71,7 +76,12 @@ export const HomePage = () => {
               Ghana's Premier Fitness Network
             </Badge>
             
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold leading-tight">
+            {/* 3D Hero Component */}
+            <div className="mb-8">
+              <Hero3D />
+            </div>
+            
+            <h1 className="text-2xl md:text-4xl lg:text-5xl font-bold leading-tight">
               Transform Your
               <span className="block bg-gradient-hero bg-clip-text text-transparent">
                 Fitness Journey

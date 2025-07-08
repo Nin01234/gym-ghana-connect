@@ -14,6 +14,9 @@ import { LoginPage } from "./pages/LoginPage";
 import { SignupPage } from "./pages/SignupPage";
 import { ClassesPage } from "./pages/ClassesPage";
 import { TrainersPage } from "./pages/TrainersPage";
+import { PremiumPage } from "./pages/PremiumPage";
+import { FindGymPage } from "./pages/FindGymPage";
+import { ContactPage } from "./pages/ContactPage";
 import { AdminLogin } from "./pages/admin/AdminLogin";
 import { AdminDashboard } from "./pages/admin/AdminDashboard";
 import { UserManagement } from "./pages/admin/UserManagement";
@@ -134,35 +137,20 @@ const App = () => (
             </MainLayout>
           } />
           
-          {/* Coming soon pages */}
+          {/* Full-featured pages */}
           <Route path="/premium" element={
             <MainLayout>
-              <div className="min-h-screen flex items-center justify-center">
-                <div className="text-center">
-                  <h1 className="text-4xl font-bold mb-4">Premium Plans</h1>
-                  <p className="text-muted-foreground">Coming soon...</p>
-                </div>
-              </div>
+              <PremiumPage />
             </MainLayout>
           } />
           <Route path="/find-gym" element={
             <MainLayout>
-              <div className="min-h-screen flex items-center justify-center">
-                <div className="text-center">
-                  <h1 className="text-4xl font-bold mb-4">Find a Gym</h1>
-                  <p className="text-muted-foreground">Coming soon...</p>
-                </div>
-              </div>
+              <FindGymPage />
             </MainLayout>
           } />
           <Route path="/contact" element={
             <MainLayout>
-              <div className="min-h-screen flex items-center justify-center">
-                <div className="text-center">
-                  <h1 className="text-4xl font-bold mb-4">Contact Us</h1>
-                  <p className="text-muted-foreground">Coming soon...</p>
-                </div>
-              </div>
+              <ContactPage />
             </MainLayout>
           } />
           
